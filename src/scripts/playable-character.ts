@@ -133,18 +133,13 @@ const setupCharacter = () => {
 
 		if (y <= 0 && velocityY < 0) {
 			y = 0;
-			velocityY = Math.abs(velocityY) * 0.55;
+			velocityY = 0;
 		}
 
 		if (y >= maxY) {
 			y = maxY;
-			if (velocityY > 110) {
-				velocityY = -velocityY * 0.32;
-				grounded = false;
-			} else {
-				velocityY = 0;
-				grounded = true;
-			}
+			velocityY = 0;
+			grounded = true;
 		} else {
 			grounded = false;
 		}
