@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="about me | dylan copp">
+	<main id="about" class="page-content home-page">
+		<section class="introduction" aria-labelledby="introduction-title">
+			<div class="about-copy">
+				<p class="kicker">welcome</p>
+				<h1 id="introduction-title">
+					<span class="typed-line">hello, i'm <span class="accent">dylan</span></span>
+				</h1>
+				<p>
+					i'm an aspiring it and information security professional with a passion for
+					understanding how technology works, solving practical problems, and continuously
+					learning new things. i'm especially interested in building my skills through hands-on
+					experience and experimenting with new and different technologies.
+				</p>
+				<p>
+					i'm currently looking for an opportunity in it or information security where i can
+					apply my skills, gain real-world experience, and continue learning and growing as a
+					professional.
+				</p>
+				<p>
+					this space is a small collection of my work, certifications, projects, and the things
+					i'm currently learning.
+				</p>
+				<p>
+					outside of technology, i enjoy playing video games, reading, watching films, and going
+					for walks.
+				</p>
+			</div>
+
+			<div class="favorites">
+				<section>
+					<h2>a few books that i've read recently:</h2>
+					<ul>
+						<li>project hail mary - andy weir 🚀</li>
+						<li>carrie - stephen king 🔪</li>
+						<li>harry potter series - j.k. rowling 🪄</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>some of my favorite films:</h2>
+					<ul>
+						<li>dune series 🏜️</li>
+						<li>marty supreme 🎾</li>
+						<li>obsession 🎬</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>some of my favorite games:</h2>
+					<ul>
+						<li>kingdom come: deliverance ii ⚔️</li>
+						<li>abiotic factor 🧪</li>
+						<li>sandustry 🏭</li>
+					</ul>
+				</section>
+			</div>
+
+			<footer class="social-links" aria-label="social media">
+				<a href="https://www.linkedin.com/in/dylan-copp-8ba6a617a" target="_blank" rel="noreferrer" aria-label="linkedin">
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.56 9h3.56v11.45H3.56V9Z" />
+					</svg>
+					<span>linkedin</span>
+				</a>
+			</footer>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.introduction { position: relative; width: 100%; }
+	.about-copy { width: min(100%, 42.5rem); margin-inline: auto; }
+	.introduction h1 { margin: 0.65rem 0 1.5rem; font-family: inherit; font-size: clamp(1.9375rem, 5vw, 4.375rem); font-weight: 400; letter-spacing: -0.05em; line-height: 1; }
+	.typed-line { display: block; width: 0; overflow: hidden; padding-bottom: 0.12em; border-right: 0.08em solid #e8e8e8; white-space: nowrap; animation: typing 1.7s steps(16, end) 0.25s forwards, cursor 0.55s step-end 0.25s 4, cursor-hide 0.01s linear 2.45s forwards; }
+	.accent { color: var(--color-accent-text); }
+	.introduction p:not(.kicker) { max-width: 42.5rem; margin: 0.85rem 0 0; color: #a3a3a3; }
+	.favorites { position: absolute; top: 8.5rem; left: calc(50% + 24rem); display: grid; width: 22rem; gap: 1.75rem; }
+	.favorites h2 { margin: 0 0 0.65rem; color: var(--color-accent-text); font-size: 1rem; font-weight: 400; }
+	.favorites ul { display: grid; gap: 0.35rem; margin: 0; padding: 0; color: #929298; list-style: none; }
+	.favorites li::before { margin-right: 0.65rem; color: var(--color-accent); content: '•'; }
+	.social-links { width: min(100%, 42.5rem); margin: 2rem auto 0; }
+	.social-links a { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--color-accent-text); font-size: 1rem; text-decoration: none; transition: color 160ms ease; }
+	.social-links svg { width: 1.15rem; height: 1.15rem; fill: var(--color-accent); transition: fill 160ms ease; }
+	.social-links a:hover, .social-links a:focus-visible { color: #fff; }
+	.social-links a:hover svg, .social-links a:focus-visible svg { fill: #5b5b8f; }
+
+	@keyframes typing {
+		to { width: 15.2ch; }
+	}
+
+	@keyframes cursor {
+		50% { border-color: transparent; }
+	}
+
+	@keyframes cursor-hide {
+		to { border-color: transparent; }
+	}
+
+	@media (max-width: 1600px) {
+		.favorites { position: static; width: min(100%, 42.5rem); margin: 2.25rem auto 0; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.typed-line { width: auto; border-right: 0; animation: none; }
+	}
+</style>

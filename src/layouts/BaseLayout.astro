@@ -1,0 +1,91 @@
+---
+import { ClientRouter, fade } from 'astro:transitions';
+import '@fontsource/space-mono/400.css';
+import '@fontsource/space-mono/700.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#18181c" />
+		<link rel="icon" type="image/png" href="/images/site/favicon.png" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<ClientRouter />
+	</head>
+	<body>
+		<div class="site-shell">
+			<aside class="directory" aria-label="site directory" transition:name="directory" transition:animate="none">
+				<nav>
+					<ul class="tree-children">
+						<li>
+							<a class="directory-entry-with-icon" href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
+								<span>about me</span>
+								<img src="/images/site/favicon.png" alt="" width="16" height="16" />
+							</a>
+						</li>
+						<li>
+							<a class="directory-entry-with-icon" href="/certifications" aria-current={currentPath === '/certifications' ? 'page' : undefined}>
+								<span>certifications</span>
+								<img src="/images/site/certificate.png" alt="" width="16" height="16" />
+							</a>
+						</li>
+						<li>
+							<a class="directory-entry-with-icon" href="/resume" aria-current={currentPath === '/resume' ? 'page' : undefined}>
+								<span>resume</span>
+								<img src="/images/site/resume.png" alt="" width="16" height="16" />
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</aside>
+
+			<div class="page-view" transition:name="page-view" transition:animate={fade({ duration: '0.28s' })}>
+				<slot />
+			</div>
+		</div>
+
+		<script>
+			import '../scripts/wheel-navigation';
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	:root { --color-accent: #2f2f57; --color-accent-text: #8585b5; background: #18181c; color-scheme: dark; font-family: "Space Mono", ui-monospace, SFMono-Regular, Consolas, monospace; }
+	*, *::before, *::after { box-sizing: border-box; }
+	html, body { min-height: 100%; margin: 0; background: #18181c; }
+	body { min-height: 100dvh; color: #e8e8e8; font-size: 23.75px; line-height: 1.6; }
+	.site-shell { display: grid; grid-template-columns: minmax(19rem, 26vw) 1fr; min-height: 100dvh; }
+	.directory { position: sticky; z-index: 1; top: 0; display: flex; grid-column: 1; grid-row: 1; align-self: start; height: 100dvh; flex-direction: column; justify-content: center; gap: 2rem; padding: clamp(1.5rem, 2.5vw, 2.75rem); border-right: 1px solid #171717; }
+	.kicker { margin: 0; color: var(--color-accent-text); font-size: 0.859375rem; font-weight: 500; letter-spacing: 0.14em; text-transform: lowercase; }
+	.directory ul { margin: 0; padding: 0; list-style: none; }
+	.tree-children { position: relative; display: grid; gap: 0.65rem; }
+	.tree-children::before { position: absolute; top: 1.5rem; bottom: 1.5rem; left: 0.25rem; border-left: 1px solid #2b2b2b; content: ''; }
+	.tree-children li { position: relative; padding-left: 1.3rem; }
+	.tree-children li::before { position: absolute; top: 1.5rem; left: 0.25rem; width: 0.75rem; border-top: 1px solid #2b2b2b; content: ''; }
+	.tree-children li:last-child::after { position: absolute; top: 1.51rem; bottom: 0; left: 0.2rem; width: 0.15rem; background: #18181c; content: ''; }
+	.directory a, .directory li > span { color: #8c8c8c; font-size: 1.875rem; text-decoration: none; }
+	.directory-entry-with-icon { display: inline-flex; align-items: center; gap: 0.4rem; }
+	.directory-entry-with-icon img { width: 2.0625rem; height: 2.0625rem; object-fit: contain; image-rendering: pixelated; }
+	.directory a[aria-current='page'] { color: var(--color-accent-text); }
+	.directory a:hover, .directory a:focus-visible { color: #fff; }
+	.page-view { display: grid; grid-column: 1 / -1; grid-row: 1; min-width: 0; }
+	.page-content { display: grid; min-width: 0; place-items: center; padding-block: clamp(2rem, 8vw, 8rem); padding-inline: max(clamp(2rem, 8vw, 8rem), calc(max(19rem, 26vw) + 2rem)); font-size: 1.328125rem; }
+	@media (max-width: 700px) {
+		.site-shell { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+		.directory { position: static; grid-column: 1; grid-row: 1; align-self: stretch; height: auto; justify-content: flex-start; gap: 1rem; padding: 1.5rem; border-right: 0; border-bottom: 1px solid #171717; }
+		.tree-children { gap: 0.55rem; }
+		.page-view { grid-column: 1; grid-row: 2; }
+		.page-content { place-items: start center; padding: 3rem 1.5rem; }
+	}
+</style>

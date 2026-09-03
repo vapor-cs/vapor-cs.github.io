@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const skills = [
+	'windows, macos, and linux operating systems',
+	'microsoft office suite',
+	'networking: lan, wi-fi, vpn, dns, osi model',
+	'system administration and troubleshooting',
+	'powershell',
+	'wireshark',
+	'siem platforms: splunk, wazuh, elk',
+	'virtualization: proxmox, virtualbox, vmware',
+	'customer service',
+	'technical troubleshooting and problem-solving',
+	'documentation and reporting',
+	'communication',
+	'collaboration',
+	'adaptability',
+	'attention to detail',
+	'time management',
+];
+---
+
+<BaseLayout title="resume | dylan copp">
+	<main class="page-content resume-page">
+		<article class="resume" aria-labelledby="resume-title">
+			<header class="resume-header">
+				<img class="resume-header-icon" src="/images/site/resume.png" alt="" width="88" height="88" />
+
+				<div class="resume-heading">
+					<p class="kicker">resume</p>
+					<h1 id="resume-title">dylan copp</h1>
+					<address>
+						<a href="mailto:work@dylancopp.com">work@dylancopp.com</a>
+						<span aria-hidden="true">/</span>
+						<span>tampa, fl</span>
+					</address>
+				</div>
+
+				<a class="download-link" href="/documents/resume-dylan-copp.pdf" download>
+					download pdf <span aria-hidden="true">↓</span>
+				</a>
+			</header>
+
+			<section class="resume-section" aria-labelledby="summary-heading">
+				<h2 id="summary-heading">summary</h2>
+				<p>
+					graduate with a bachelor of science in cybersecurity, certified in security+,
+					cybersecurity analyst+, blue team level 1, and tryhackme security analyst level 1.
+					hands-on experience with windows, macos, and linux systems, networking, system
+					configuration, and troubleshooting through technical labs and a comprehensive home
+					lab. detail-oriented problem solver committed to responsive, customer-focused
+					technical support and a positive user experience.
+				</p>
+			</section>
+
+			<section class="resume-section" aria-labelledby="education-heading">
+				<h2 id="education-heading">education</h2>
+				<div class="entry-heading">
+					<h3>bachelor of science in cybersecurity</h3>
+					<p>university of south florida</p>
+				</div>
+				<p class="meta">december 2023</p>
+			</section>
+
+			<section class="resume-section" aria-labelledby="experience-heading">
+				<h2 id="experience-heading">experience</h2>
+				<div class="entry-heading">
+					<h3>grocery clerk</h3>
+					<p>earth fare · oldsmar, fl</p>
+				</div>
+				<p class="meta">march 2022 - april 2023</p>
+				<ul>
+					<li>assisted customers by answering questions, locating products, and providing friendly, responsive service to resolve customer needs.</li>
+					<li>maintained and organized inventory across grocery, dairy, and frozen food departments while ensuring products were properly stocked and rotated.</li>
+					<li>supported multiple departments as needed, collaborating with team members to provide efficient service and maintain quality standards.</li>
+				</ul>
+			</section>
+
+			<section class="resume-section" aria-labelledby="projects-heading">
+				<h2 id="projects-heading">projects</h2>
+
+				<div class="project">
+					<h3>homelab</h3>
+					<ul>
+						<li>built and maintain a comprehensive it/cybersecurity homelab using proxmox, opnsense, pivpn, pi-hole, unbound, wazuh, splunk, openvas, and wireshark to gain hands-on experience with virtualization, networking, system administration, and troubleshooting.</li>
+						<li>configured and managed virtual systems, network services, dns, vpn connectivity, firewall rules, and security monitoring across the lab environment.</li>
+					</ul>
+				</div>
+
+				<div class="project">
+					<h3>tryhackme</h3>
+					<ul>
+						<li>completed 150+ hours of hands-on cybersecurity labs and challenges, gaining practical skills in cyber threat intelligence, network traffic analysis, endpoint monitoring, security information and event management, and digital forensics and incident response.</li>
+						<li>gained experience with tools such as splunk, wazuh, elk, event viewer, wireshark, and autopsy.</li>
+						<li>ranked in the top 1% globally.</li>
+					</ul>
+				</div>
+			</section>
+
+			<section class="resume-section" aria-labelledby="certifications-heading">
+				<h2 id="certifications-heading">certifications</h2>
+				<ul class="compact-list">
+					<li>comptia security+ <span>june 2024</span></li>
+					<li>comptia cybersecurity analyst (cysa+) <span>august 2024</span></li>
+					<li>security blue team blue team level 1 (btl1) <span>november 2024</span></li>
+					<li>tryhackme security analyst level 1 (sal1) <span>june 2025</span></li>
+				</ul>
+			</section>
+
+			<section class="resume-section" aria-labelledby="skills-heading">
+				<h2 id="skills-heading">skills</h2>
+				<ul class="skills-list">
+					{skills.map((skill) => <li>{skill}</li>)}
+				</ul>
+			</section>
+		</article>
+	</main>
+</BaseLayout>
+
+<style>
+	.resume-page { align-items: start; }
+	.resume { width: min(100%, 68rem); }
+	.resume-header { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) auto; gap: 1.5rem; align-items: center; padding-bottom: 2rem; border-bottom: 1px solid #31313b; text-align: center; }
+	.resume-heading { display: flex; min-width: 0; flex-direction: column; gap: 0.75rem; align-items: center; }
+	.resume-header-icon { display: block; width: 5.5rem; height: 5.5rem; object-fit: contain; image-rendering: pixelated; }
+	h1, h2, h3, p { margin-top: 0; }
+	h1 { margin: 0.35rem 0 0; font-size: clamp(2.5rem, 5vw, 4.375rem); font-weight: 400; letter-spacing: -0.05em; line-height: 1; }
+	address { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; color: #8c8c8c; font-size: 0.95rem; font-style: normal; }
+	address a { color: inherit; text-underline-offset: 0.2em; }
+	.download-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 0.9rem; border: 1px solid var(--color-accent); border-radius: 0.65rem; color: var(--color-accent-text); font-size: 0.95rem; text-decoration: none; }
+	.download-link:hover, .download-link:focus-visible { border-color: #5b5b8f; color: #fff; }
+	.resume-section { padding: 2.25rem 0; border-bottom: 1px solid #31313b; }
+	.resume-section:last-child { border-bottom: 0; }
+	h2 { margin-bottom: 1.3rem; color: var(--color-accent-text); font-size: 1.3rem; font-weight: 500; letter-spacing: 0.04em; }
+	h3 { margin-bottom: 0.25rem; font-size: 1.15rem; font-weight: 500; }
+	.resume-section p, .resume-section li { color: #aaaab0; font-size: 1rem; }
+	.resume-section > p:last-child { margin-bottom: 0; }
+	.entry-heading { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; align-items: baseline; }
+	.entry-heading p { margin-bottom: 0; color: #85858d; }
+	.meta { margin-bottom: 1rem; color: #74747d !important; font-size: 0.9rem !important; }
+	.resume-section ul { display: grid; gap: 0.65rem; margin: 0; padding-left: 1.25rem; }
+	.project + .project { margin-top: 1.75rem; }
+	.compact-list li { padding-left: 0.15rem; }
+	.compact-list span { color: #71717a; }
+	.compact-list span::before { content: ' · '; }
+	.skills-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem 2.5rem !important; }
+	@media (max-width: 900px) {
+		.resume-header { grid-template-columns: 1fr; justify-items: center; }
+		.download-link { justify-self: center; }
+	}
+	@media (max-width: 700px) {
+		.skills-list { grid-template-columns: 1fr; }
+	}
+	@media (max-width: 480px) {
+		.resume-header-icon { width: 4.25rem; height: 4.25rem; }
+	}
+</style>
