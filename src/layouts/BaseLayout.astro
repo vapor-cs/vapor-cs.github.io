@@ -54,8 +54,19 @@ const currentPath = Astro.url.pathname;
 			</div>
 		</div>
 
+		<div
+			class="playable-character"
+			data-playable-character
+			aria-hidden="true"
+			transition:persist="playable-character"
+		>
+			<img class="character-controls" src="/images/site/wasd-icon.png" alt="" />
+			<span class="character-sprite" aria-hidden="true"></span>
+		</div>
+
 		<script>
 			import '../scripts/wheel-navigation';
+			import '../scripts/playable-character';
 		</script>
 	</body>
 </html>
@@ -81,11 +92,20 @@ const currentPath = Astro.url.pathname;
 	.directory a:hover, .directory a:focus-visible { color: #fff; }
 	.page-view { display: grid; grid-column: 1 / -1; grid-row: 1; min-width: 0; }
 	.page-content { display: grid; min-width: 0; place-items: center; padding-block: clamp(2rem, 8vw, 8rem); padding-inline: max(clamp(2rem, 8vw, 8rem), calc(max(19rem, 26vw) + 2rem)); font-size: 1.328125rem; }
+	.playable-character { position: fixed; z-index: 20; bottom: 0; left: 50%; width: 3rem; height: 4rem; padding: 0; border: 0; background: transparent; pointer-events: none; transform: translateX(-50%); }
+	.playable-character.is-ready { top: 0; right: auto; bottom: auto; left: 0; }
+	.character-controls { position: absolute; bottom: calc(100% + 0.2rem); left: 50%; display: block; width: 5rem; height: auto; opacity: 0.82; image-rendering: pixelated; transform: translateX(-50%); transition: opacity 180ms ease, transform 180ms ease; }
+	.playable-character.has-moved .character-controls { opacity: 0; transform: translate(-50%, 0.35rem); }
+	.character-sprite { position: absolute; top: 50%; left: 50%; display: block; width: 4.5rem; height: 5rem; background-image: url('/images/site/character-sprite-sheet.png'); background-repeat: no-repeat; background-position: 0 0; background-size: 500% 300%; image-rendering: pixelated; transform: translate(-50%, -50%) scaleX(var(--character-direction, 1)); transform-origin: center; }
 	@media (max-width: 700px) {
 		.site-shell { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
 		.directory { position: static; grid-column: 1; grid-row: 1; align-self: stretch; height: auto; justify-content: flex-start; gap: 1rem; padding: 1.5rem; border-right: 0; border-bottom: 1px solid #171717; }
 		.tree-children { gap: 0.55rem; }
 		.page-view { grid-column: 1; grid-row: 2; }
 		.page-content { place-items: start center; padding: 3rem 1.5rem; }
+		.playable-character { display: none; }
+	}
+	@media (hover: none) and (pointer: coarse) {
+		.playable-character { display: none; }
 	}
 </style>
