@@ -1,6 +1,6 @@
 import { navigate } from 'astro:transitions/client';
 
-const routes = ['/', '/certifications', '/resume'];
+const routes = ['/', '/certifications', '/blog', '/resume'];
 const gestureThreshold = 80;
 const gestureResetDelay = 350;
 
@@ -47,15 +47,17 @@ window.addEventListener(
 		accumulatedDelta += event.deltaY;
 		if (Math.abs(accumulatedDelta) < gestureThreshold) return;
 
-		const currentIndex = routes.indexOf(normalizedPath());
-		const nextRoute = routes[currentIndex + direction];
+		const currentPath = normalizedPath();
+		const readingBlogPost = currentPath.startsWith('/blog/');
+		const currentIndex = routes.indexOf(currentPath);
+		const nextRoute = readingBlogPost ? '/blog' : routes[currentIndex + direction];
 		accumulatedDelta = 0;
 
 		if (!nextRoute) return;
 
 		event.preventDefault();
 		navigationLocked = true;
-		navigationDirection = direction;
+		navigationDirection = readingBlogPost ? 1 : direction;
 		window.clearTimeout(unlockTimer);
 		unlockTimer = window.setTimeout(() => {
 			navigationLocked = false;

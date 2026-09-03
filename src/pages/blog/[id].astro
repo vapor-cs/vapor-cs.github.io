@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { id: post.id },
+		props: { post },
+	}));
+}
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+	month: 'long',
+	year: 'numeric',
+	timeZone: 'UTC',
+}).format(post.data.publishedAt).toLowerCase();
+---
+
+<BaseLayout title={`${post.data.title} | dylan copp`}>
+	<main class="page-content blog-post-page">
+		<article class="blog-post">
+			<a class="back-link" href="/blog"><span aria-hidden="true">←</span> all posts</a>
+			<header>
+				<p class="kicker">blog post</p>
+				<h1>{post.data.title}</h1>
+				<time datetime={post.data.publishedAt.toISOString()}>{formattedDate}</time>
+				<p class="description">{post.data.description}</p>
+			</header>
+			<div class="post-body">
+				<Content />
+			</div>
+		</article>
+	</main>
+</BaseLayout>
+
+<style>
+	.blog-post-page { align-items: start; }
+	.blog-post { width: min(100%, 42.5rem); }
+	.back-link { display: inline-block; margin-bottom: 2.5rem; color: var(--color-accent-text); font-size: 0.875rem; text-decoration-color: var(--color-accent); text-underline-offset: 0.22em; }
+	.back-link:hover, .back-link:focus-visible { color: #fff; }
+	h1 { margin: 0.65rem 0 1rem; font-size: clamp(2.5rem, 5vw, 4.375rem); font-weight: 400; letter-spacing: -0.05em; line-height: 1.08; }
+	time { color: #73737b; font-size: 0.875rem; }
+	.description { margin: 1.5rem 0 0; color: #a3a3a3; text-indent: 1.5em; }
+	.post-body { margin-top: 3rem; padding-top: 2.25rem; border-top: 1px solid var(--color-accent); color: #a3a3a3; }
+	.post-body :global(h2) { margin: 2.5rem 0 0.75rem; color: var(--color-accent-text); font-size: 1.35rem; font-weight: 500; }
+	.post-body :global(p) { margin: 0.9rem 0 0; text-indent: 1.5em; }
+	.post-body :global(a) { color: var(--color-accent-text); text-underline-offset: 0.2em; }
+</style>

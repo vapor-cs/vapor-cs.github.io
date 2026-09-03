@@ -40,6 +40,12 @@ const currentPath = Astro.url.pathname;
 							</a>
 						</li>
 						<li>
+							<a class="directory-entry-with-icon" href="/blog" aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}>
+								<span>blog</span>
+								<img src="/images/site/blog-icon.png" alt="" width="16" height="16" />
+							</a>
+						</li>
+						<li>
 							<a class="directory-entry-with-icon" href="/resume" aria-current={currentPath === '/resume' ? 'page' : undefined}>
 								<span>resume</span>
 								<img src="/images/site/resume.png" alt="" width="16" height="16" />
@@ -87,7 +93,7 @@ const currentPath = Astro.url.pathname;
 	.tree-children li:last-child::after { position: absolute; top: 1.51rem; bottom: 0; left: 0.2rem; width: 0.15rem; background: #18181c; content: ''; }
 	.directory a, .directory li > span { color: #8c8c8c; font-size: 1.875rem; text-decoration: none; }
 	.directory-entry-with-icon { display: inline-flex; align-items: center; gap: 0.4rem; }
-	.directory-entry-with-icon img { width: 2.0625rem; height: 2.0625rem; object-fit: contain; image-rendering: pixelated; }
+	.directory-entry-with-icon img { width: 2.0625rem; height: 2.0625rem; flex: none; object-fit: contain; image-rendering: pixelated; }
 	.directory a[aria-current='page'] { color: var(--color-accent-text); }
 	.directory a:hover, .directory a:focus-visible { color: #fff; }
 	.page-view { display: grid; grid-column: 1 / -1; grid-row: 1; min-width: 0; }
@@ -95,7 +101,7 @@ const currentPath = Astro.url.pathname;
 	.playable-character { position: fixed; z-index: 20; bottom: 0; left: 50%; width: 3rem; height: 4rem; padding: 0; border: 0; background: transparent; pointer-events: none; transform: translateX(-50%); }
 	.playable-character.is-ready { top: 0; right: auto; bottom: auto; left: 0; }
 	.character-controls { position: absolute; bottom: calc(100% + 0.2rem); left: 50%; display: block; width: 5rem; height: auto; opacity: 0.82; image-rendering: pixelated; transform: translateX(-50%); transition: opacity 180ms ease, transform 180ms ease; }
-	.playable-character.has-moved .character-controls { opacity: 0; transform: translate(-50%, 0.35rem); }
+	.playable-character.guide-hidden .character-controls { opacity: 0; transform: translate(-50%, 0.35rem); }
 	.character-sprite { position: absolute; top: 50%; left: 50%; display: block; width: 4.5rem; height: 5rem; background-image: url('/images/site/character-sprite-sheet.png'); background-repeat: no-repeat; background-position: 0 0; background-size: 500% 300%; image-rendering: pixelated; transform: translate(-50%, -50%) scaleX(var(--character-direction, 1)); transform-origin: center; }
 	@media (max-width: 700px) {
 		.site-shell { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
