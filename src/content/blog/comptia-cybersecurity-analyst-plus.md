@@ -1,6 +1,6 @@
 ---
 title: earning the comptia cybersecurity analyst+
-description: security+ but more.
+description: security+ but more in depth
 publishedAt: 2024-08-01
 ---
 
