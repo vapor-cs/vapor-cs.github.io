@@ -1,6 +1,6 @@
 # dylan copp — personal portfolio
 
-A deliberately minimal, static Astro portfolio for an IT and information-security job search. The site is built with Astro and published at [vapor-cs.github.io](https://vapor-cs.github.io).
+A deliberately minimal, static Astro portfolio for an IT and information-security job search. The site is built with Astro, deployed through GitHub Pages, and published at [dylancopp.com](https://dylancopp.com).
 
 ## Local development
 
