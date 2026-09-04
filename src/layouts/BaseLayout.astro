@@ -8,7 +8,8 @@ interface Props {
 }
 
 const { title } = Astro.props;
-const currentPath = Astro.url.pathname;
+const pathname = Astro.url.pathname;
+const currentPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -24,28 +25,28 @@ const currentPath = Astro.url.pathname;
 	</head>
 	<body>
 		<div class="site-shell">
-			<aside class="directory" aria-label="site directory" transition:name="directory" transition:animate="none">
+			<aside class="directory" data-mobile-directory aria-label="site directory" transition:name="directory" transition:animate="none">
 				<nav>
-					<ul class="tree-children">
-						<li>
+					<ul id="site-directory-tree" class="tree-children">
+						<li class:list={{ 'is-current': currentPath === '/' }}>
 							<a class="directory-entry-with-icon" href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
 								<span>about me</span>
 								<img src="/images/site/favicon.png" alt="" width="16" height="16" />
 							</a>
 						</li>
-						<li>
+						<li class:list={{ 'is-current': currentPath === '/certifications' }}>
 							<a class="directory-entry-with-icon" href="/certifications" aria-current={currentPath === '/certifications' ? 'page' : undefined}>
 								<span>certifications</span>
 								<img src="/images/site/certificate.png" alt="" width="16" height="16" />
 							</a>
 						</li>
-						<li>
+						<li class:list={{ 'is-current': currentPath.startsWith('/blog') }}>
 							<a class="directory-entry-with-icon" href="/blog" aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}>
 								<span>blog</span>
 								<img src="/images/site/blog-icon.png" alt="" width="16" height="16" />
 							</a>
 						</li>
-						<li>
+						<li class:list={{ 'is-current': currentPath === '/resume' }}>
 							<a class="directory-entry-with-icon" href="/resume" aria-current={currentPath === '/resume' ? 'page' : undefined}>
 								<span>resume</span>
 								<img src="/images/site/resume.png" alt="" width="16" height="16" />
@@ -53,6 +54,17 @@ const currentPath = Astro.url.pathname;
 						</li>
 					</ul>
 				</nav>
+				<button
+					class="directory-toggle"
+					type="button"
+					aria-controls="site-directory-tree"
+					aria-expanded="false"
+					aria-label="show directory"
+				>
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path d="m6.7 9.3 5.3 5.3 5.3-5.3 1.4 1.4-6.7 6.7-6.7-6.7 1.4-1.4Z" />
+					</svg>
+				</button>
 			</aside>
 
 			<div class="page-view" transition:name="page-view" transition:animate={fade({ duration: '0.28s' })}>
@@ -73,6 +85,7 @@ const currentPath = Astro.url.pathname;
 		<script>
 			import '../scripts/wheel-navigation';
 			import '../scripts/playable-character';
+			import '../scripts/mobile-directory';
 		</script>
 	</body>
 </html>
@@ -81,7 +94,7 @@ const currentPath = Astro.url.pathname;
 	:root { --color-accent: #2f2f57; --color-accent-text: #8585b5; background: #18181c; color-scheme: dark; font-family: "Space Mono", ui-monospace, SFMono-Regular, Consolas, monospace; }
 	*, *::before, *::after { box-sizing: border-box; }
 	html, body { min-height: 100%; margin: 0; background: #18181c; }
-	body { min-height: 100dvh; color: #e8e8e8; font-size: 23.75px; line-height: 1.6; }
+	body { min-height: 100dvh; color: #e8e8e8; font-size: 23.75px; line-height: 1.66; }
 	.site-shell { display: grid; grid-template-columns: minmax(19rem, 26vw) 1fr; min-height: 100dvh; }
 	.directory { position: sticky; z-index: 1; top: 0; display: flex; grid-column: 1; grid-row: 1; align-self: start; height: 100dvh; flex-direction: column; justify-content: center; gap: 2rem; padding: clamp(1.5rem, 2.5vw, 2.75rem); border-right: 1px solid #171717; }
 	.kicker { margin: 0; color: var(--color-accent-text); font-size: 0.859375rem; font-weight: 500; letter-spacing: 0.14em; text-transform: lowercase; }
@@ -96,6 +109,7 @@ const currentPath = Astro.url.pathname;
 	.directory-entry-with-icon img { width: 2.0625rem; height: 2.0625rem; flex: none; object-fit: contain; image-rendering: pixelated; }
 	.directory a[aria-current='page'] { color: var(--color-accent-text); }
 	.directory a:hover, .directory a:focus-visible { color: #fff; }
+	.directory-toggle { display: none; }
 	.page-view { display: grid; grid-column: 1 / -1; grid-row: 1; min-width: 0; }
 	.page-content { display: grid; min-width: 0; place-items: center; padding-block: clamp(2rem, 8vw, 8rem); padding-inline: max(clamp(2rem, 8vw, 8rem), calc(max(19rem, 26vw) + 2rem)); font-size: 1.328125rem; }
 	.playable-character { position: fixed; z-index: 20; bottom: 0; left: 50%; width: 3rem; height: 4rem; padding: 0; border: 0; background: transparent; pointer-events: none; transform: translateX(-50%); }
@@ -105,8 +119,21 @@ const currentPath = Astro.url.pathname;
 	.character-sprite { position: absolute; top: 50%; left: 50%; display: block; width: 4.5rem; height: 5rem; background-image: url('/images/site/character-sprite-sheet.png'); background-repeat: no-repeat; background-position: 0 0; background-size: 500% 300%; image-rendering: pixelated; transform: translate(-50%, -50%) scaleX(var(--character-direction, 1)); transform-origin: center; }
 	@media (max-width: 700px) {
 		.site-shell { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-		.directory { position: static; grid-column: 1; grid-row: 1; align-self: stretch; height: auto; justify-content: flex-start; gap: 1rem; padding: 1.5rem; border-right: 0; border-bottom: 1px solid #171717; }
+		.directory { position: relative; grid-column: 1; grid-row: 1; align-self: stretch; height: auto; justify-content: flex-start; gap: 1rem; padding: 1rem 4.75rem 1rem 1.5rem; border-right: 0; border-bottom: 1px solid #171717; }
+		.directory a, .directory li > span { font-size: clamp(1.35rem, 6vw, 1.625rem); }
+		.directory-entry-with-icon img { width: 1.75rem; height: 1.75rem; }
 		.tree-children { gap: 0.55rem; }
+		.directory:not(.is-expanded) .tree-children::before,
+		.directory:not(.is-expanded) .tree-children li::before,
+		.directory:not(.is-expanded) .tree-children li::after { display: none; }
+		.directory:not(.is-expanded) .tree-children li:not(.is-current) { display: none; }
+		.directory:not(.is-expanded) .tree-children li.is-current { padding-left: 0; }
+		.directory-toggle { position: absolute; top: 50%; right: 1.25rem; display: grid; width: 2.5rem; height: 2.5rem; padding: 0; border: 1px solid var(--color-accent); border-radius: 0.65rem; background: #1d1d23; color: var(--color-accent-text); cursor: pointer; place-items: center; transform: translateY(-50%); }
+		.directory-toggle:hover, .directory-toggle:focus-visible { color: #fff; }
+		.directory-toggle:focus-visible { outline: 2px solid var(--color-accent-text); outline-offset: 2px; }
+		.directory-toggle svg { width: 1.35rem; height: 1.35rem; fill: currentColor; transition: transform 180ms ease; }
+		.directory.is-expanded .directory-toggle { top: 1rem; transform: none; }
+		.directory.is-expanded .directory-toggle svg { transform: rotate(180deg); }
 		.page-view { grid-column: 1; grid-row: 2; }
 		.page-content { place-items: start center; padding: 3rem 1.5rem; }
 		.playable-character { display: none; }
