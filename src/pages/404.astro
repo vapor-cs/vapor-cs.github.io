@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 | dylan copp">
+	<main class="page-content error-page">
+		<section class="not-found" aria-labelledby="not-found-title">
+			<p class="kicker">path not found</p>
+			<div class="error-code" aria-hidden="true">404</div>
+			<h1 id="not-found-title">this page is missing.</h1>
+			<p class="message">
+				the file you were looking for may have moved, been renamed, or wandered outside the directory.
+			</p>
+
+			<nav class="error-links" aria-label="404 page options">
+				<a href="/">return to about me</a>
+				<a href="/blog">browse the blog</a>
+			</nav>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.error-page { text-align: center; }
+	.not-found { width: min(100%, 40rem); }
+	.kicker { margin-bottom: 1.1rem; }
+	.error-code {
+		position: relative;
+		display: inline-block;
+		padding: 0.2em 0.38em 0.28em;
+		border: 1px solid var(--color-accent);
+		border-radius: 0.2em;
+		color: var(--color-accent-text);
+		font-size: clamp(5rem, 14vw, 9rem);
+		font-weight: 700;
+		letter-spacing: -0.12em;
+		line-height: 0.85;
+		text-indent: -0.08em;
+		text-shadow: 0.08em 0.08em 0 var(--color-accent);
+	}
+	.error-code::before,
+	.error-code::after {
+		position: absolute;
+		width: 0.12em;
+		height: 0.12em;
+		background: #18181c;
+		content: '';
+	}
+	.error-code::before { top: -1px; left: -1px; }
+	.error-code::after { right: -1px; bottom: -1px; }
+	h1 {
+		margin: 2rem 0 0;
+		font-size: clamp(1.75rem, 4vw, 2.75rem);
+		font-weight: 400;
+		letter-spacing: -0.04em;
+		line-height: 1.15;
+	}
+	.message {
+		max-width: 34rem;
+		margin: 1.25rem auto 0;
+		color: #929298;
+		font-size: 1rem;
+		line-height: 1.7;
+	}
+	.error-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: 2rem;
+	}
+	.error-links a {
+		padding: 0.65rem 0.9rem;
+		border: 1px solid var(--color-accent);
+		border-radius: 0.65rem;
+		background: #1d1d23;
+		color: var(--color-accent-text);
+		font-size: 0.9rem;
+		text-decoration: none;
+		transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+	}
+	.error-links a:hover,
+	.error-links a:focus-visible {
+		border-color: var(--color-accent-text);
+		color: #fff;
+		transform: translateY(-2px);
+	}
+	.error-links a:focus-visible { outline: 2px solid var(--color-accent-text); outline-offset: 3px; }
+	@media (prefers-reduced-motion: reduce) {
+		.error-links a { transition: none; }
+		.error-links a:hover,
+		.error-links a:focus-visible { transform: none; }
+	}
+</style>
